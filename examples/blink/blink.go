@@ -30,10 +30,11 @@ func main() {
 		}
 	}()
 
-	for {
+	for i := 1; i <= 16; i++ {
 		pin.Set()
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(200 * time.Millisecond)
 		pin.Clear()
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(300 * time.Millisecond)
+		fmt.Printf("Blink %v\n", i)
 	}
 }
