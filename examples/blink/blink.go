@@ -12,7 +12,13 @@ import (
 
 func main() {
 	// set GPIO25 to output mode
-	pin, err := gpio.OpenPin(rpi.GPIO22, gpio.ModeOutput)
+
+	pin22, err := gpio.OpenPin(rpi.GPIO22, gpio.ModeOutput)
+	if err != nil {
+		fmt.Printf("Error opening pin! %s\n", err)
+		return
+	}
+	pin23, err := gpio.OpenPin(rpi.GPIO23, gpio.ModeOutput)
 	if err != nil {
 		fmt.Printf("Error opening pin! %s\n", err)
 		return
@@ -24,17 +30,21 @@ func main() {
 	go func() {
 		for _ = range c {
 			fmt.Printf("\nClearing and unexporting the pin.\n")
-			pin.Clear()
-			pin.Close()
+			pin22.Clear()
+			pin23.Clear()
+			pin22.Close()
+			pin23.Close()
 			os.Exit(0)
 		}
 	}()
 
-	for i := 1; i <= 16; i++ {
-		pin.Set()
+	for j := 1; j <= 15; j++ {
+		pin22.Set()
+		pin23.Clear()
 		time.Sleep(200 * time.Millisecond)
-		pin.Clear()
+		pin23.Set()
+		pin22.Clear()
 		time.Sleep(300 * time.Millisecond)
-		fmt.Printf("Blink %v\n", i)
+		fmt.Printf("Blink %v\n", j)
 	}
 }
