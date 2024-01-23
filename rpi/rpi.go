@@ -83,21 +83,45 @@ const (
 	BCM2835_GPIO_FSEL_ALT5        = 0x2 // Alternate function 5
 	BCM2835_GPIO_FSEL_MASK uint32 = 0x7
 
-	GPIO_P1_12 = 18
+	// General Purpose GPIO Digital i/o Map (Pin to Port)
+	GPIO_P1_11 = 17
 	GPIO_P1_13 = 27
 	GPIO_P1_15 = 22
+	GPIO_P1_16 = 23
 	GPIO_P1_18 = 24
 	GPIO_P1_22 = 25
-	GPIO_P1_16 = 23
-	GPIO_P1_11 = 17
+	GPIO_P1_29 = 05
+	GPIO_P1_31 = 06
+	GPIO_P1_32 = 12
+	GPIO_P1_33 = 13
+	GPIO_P1_36 = 16
+	GPIO_P1_37 = 26
 
-	GPIO21 = GPIO_P1_13
-	GPIO22 = GPIO_P1_15
-	GPIO23 = GPIO_P1_16
-	GPIO25 = GPIO_P1_22
-	GPIO24 = GPIO_P1_18
-	GPIO27 = GPIO_P1_13
-	GPIO17 = GPIO_P1_11
+	// PCM i/o Map (Pin to Port)
+	GPIO_P1_12 = 18 // PCM Clk GPIO18 Pin 12
+	GPIO_P1_35 = 19 // PCM FS  GPIO19 Pin 35
+	GPIO_P1_38 = 20 // PCM Din GPIO18 Pin 38
+	GPIO_P1_40 = 21 // PCM Dout  GPIO19 Pin 40
+
+	// General Purpose GPIO Digital i/o Map (Port to Pin)
+	GPIO05 = GPIO_P1_29 // GPclk1 Vid1
+	GPIO06 = GPIO_P1_31 // GPclk2 Vid2
+	GPIO12 = GPIO_P1_32 // PWM0 Vid8
+	GPIO13 = GPIO_P1_33 // PWM1 Vid9
+	GPIO16 = GPIO_P1_36 // pin 36 pi4
+	GPIO17 = GPIO_P1_11 // pin 11 pi4
+	GPIO22 = GPIO_P1_15 // pin 15 pi4
+	GPIO23 = GPIO_P1_16 // pin 16 pi4
+	GPIO24 = GPIO_P1_18 // pin 18 pi4
+	GPIO25 = GPIO_P1_22 // pin 22 pi4
+	GPIO26 = GPIO_P1_37 // pin 27 pi4
+	GPIO27 = GPIO_P1_13 // pin 13 pi4
+
+	// PCM i/o Map (Port to Pin)
+	GPIO18 = GPIO_P1_12 // PCM Clk GPIO18 Pin 12
+	GPIO19 = GPIO_P1_35 // PCM FS  GPIO19 Pin 35
+	GPIO20 = GPIO_P1_38 // PCM Din GPIO18 Pin 38
+	GPIO21 = GPIO_P1_40 // PCM Dout  GPIO19 Pin 40
 )
 
 func initRPi() {

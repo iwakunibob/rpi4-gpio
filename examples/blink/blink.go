@@ -13,7 +13,7 @@ import (
 func main() {
 	// set GPIO25 to output mode
 
-	outputs := []uint{rpi.GPIO22, rpi.GPIO23, rpi.GPIO24, rpi.GPIO25} //,  rpi.GPIO25}
+	outputs := []uint{rpi.GPIO16, rpi.GPIO17, rpi.GPIO22, rpi.GPIO23} //, rpi.GPIO23, rpi.GPIO24, rpi.GPIO25} //,  rpi.GPIO25}
 	colorLED := []string{"Red", "Yellow", "Green", "Blue"}
 	var outPins [4]gpio.Pin
 	fmt.Println(outputs)
