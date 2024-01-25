@@ -11,32 +11,45 @@ import (
 )
 
 func main() {
-	// set GPIO25 to output mode
-
+	// Configure Digital Outputs
 	outputs := []uint{rpi.GPIO16, rpi.GPIO17,
-		rpi.GPIO22, rpi.GPIO23, rpi.GPIO24,
-		rpi.GPIO25, rpi.GPIO26, rpi.GPIO27}
+		rpi.GPIO22, rpi.GPIO23, rpi.GPIO24, rpi.GPIO25}
 	colorLED := []string{"Red", "Yellow", "Green", "Blue",
 		"Red", "Yellow", "Green", "Blue"}
-	var outPins [8]gpio.Pin
+	var outputPins [6]gpio.Pin
 	fmt.Println(outputs)
 	for i, outp := range outputs {
 		pin, err := gpio.OpenPin(int(outp), gpio.ModeOutput)
-		outPins[i] = pin
+		outputPins[i] = pin
 		if err != nil {
 			fmt.Printf("Error opening %d pin = %v, Error: %s\n", outp, pin, err)
 			return
 		}
 	}
+	// Configure Digital Inputs
+	inputs := []uint{rpi.GPIO26, rpi.GPIO27}
+	var inputPins [2]gpio.Pin
+	fmt.Println(inputs)
+	for i, inp := range inputs {
+		pin, err := gpio.OpenPin(int(inp), gpio.ModeInput)
+		inputPins[i] = pin
+		if err != nil {
+			fmt.Printf("Error opening %d pin = %v, Error: %s\n", inp, pin, err)
+			return
+		}
+	}
 
-	// turn the led off on exit
+	// Turn the outputs off on exit
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	go func() {
 		for _ = range c {
-			fmt.Printf("\nClearing and unexporting the pins.\n")
-			for _, pin := range outPins {
+			fmt.Printf("\nClearing pins and unexporting the pins.\n")
+			for _, pin := range outputPins {
 				pin.Clear()
+				pin.Close()
+			}
+			for _, pin := range inputPins {
 				pin.Close()
 			}
 			os.Exit(0)
@@ -44,12 +57,12 @@ func main() {
 	}()
 
 	for j := 1; j <= 8; j++ {
-		for k, pin := range outPins {
+		for k, pin := range outputPins {
 			pin.Set()
-			time.Sleep(700 * time.Millisecond)
+			time.Sleep(950 * time.Millisecond)
 			pin.Clear()
-			time.Sleep(300 * time.Millisecond)
 			fmt.Printf("Loop %d Output %s\n", j, colorLED[k])
+			time.Sleep(50 * time.Millisecond)
 		}
 	}
 }
