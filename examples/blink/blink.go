@@ -26,7 +26,7 @@ func main() {
 		}
 	}
 	// Configure Digital Inputs
-	inputs := []uint{rpi.GPIO06, rpi.GPIO06}
+	inputs := []uint{rpi.GPIO05, rpi.GPIO06}
 	var inputPins [2]gpio.Pin
 	fmt.Println(inputs)
 	for i, inp := range inputs {
