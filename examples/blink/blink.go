@@ -26,8 +26,8 @@ func main() {
 		}
 	}
 	// Configure Digital Inputs
-	inputs := []uint{rpi.GPIO06}
-	var inputPins [1]gpio.Pin
+	inputs := []uint{rpi.GPIO06, rpi.GPIO06}
+	var inputPins [2]gpio.Pin
 	fmt.Println(inputs)
 	for i, inp := range inputs {
 		pin, err := gpio.OpenPin(int(inp), gpio.ModeInput)
@@ -43,7 +43,6 @@ func main() {
 	signal.Notify(c, os.Interrupt)
 	go func() {
 		for _ = range c {
-			fmt.Printf("\nClearing and reset pins\nSafe Exit\n")
 			for _, pin := range outputPins {
 				pin.Clear()
 				pin.Close()
@@ -51,6 +50,8 @@ func main() {
 			for _, pin := range inputPins {
 				pin.Close()
 			}
+			fmt.Printf("\nClearing and reset pins\nSafe Exit\n")
+			time.Sleep(500 * time.Millisecond)
 			os.Exit(0)
 		}
 	}()
