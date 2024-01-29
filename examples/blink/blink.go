@@ -26,17 +26,17 @@ func main() {
 		}
 	}
 	// Configure Digital Inputs
-	inputs := []uint{rpi.GPIO27}
-	var inputPins [0]gpio.Pin
-	fmt.Println(inputs)
-	for i, inp := range inputs {
-		pin, err := gpio.OpenPin(int(inp), gpio.ModeInput)
-		inputPins[i] = pin
-		if err != nil {
-			fmt.Printf("Error opening %d pin = %v, Error: %s\n", inp, pin, err)
-			return
-		}
-	}
+	// inputs := []uint{rpi.GPIO27}
+	// var inputPins [0]gpio.Pin
+	// fmt.Println(inputs)
+	// for i, inp := range inputs {
+	// 	pin, err := gpio.OpenPin(int(inp), gpio.ModeInput)
+	// 	inputPins[i] = pin
+	// 	if err != nil {
+	// 		fmt.Printf("Error opening %d pin = %v, Error: %s\n", inp, pin, err)
+	// 		return
+	// 	}
+	// }
 
 	// Turn the outputs off on exit
 	c := make(chan os.Signal, 1)
@@ -48,24 +48,24 @@ func main() {
 				pin.Clear()
 				pin.Close()
 			}
-			for _, pin := range inputPins {
-				pin.Close()
-			}
+			// for _, pin := range inputPins {
+			// 	pin.Close()
+			// }
 			os.Exit(0)
 		}
 	}()
 
-	// Read Inputs
-	for m, pin := range inputPins {
-		err := pin.BeginWatch(gpio.EdgeFalling, func() {
-			fmt.Println("Input GPIO", pin, "triggered!")
-		})
-		if err != nil {
-			fmt.Printf("Unable to watch input %v: %s\n", inputs[m], err.Error())
-			os.Exit(1)
-		}
-		fmt.Printf("Now watching %v on a falling edge.\n", inputs[m])
-	}
+	// // Read Inputs
+	// for m, pin := range inputPins {
+	// 	err := pin.BeginWatch(gpio.EdgeFalling, func() {
+	// 		fmt.Println("Input GPIO", pin, "triggered!")
+	// 	})
+	// 	if err != nil {
+	// 		fmt.Printf("Unable to watch input %v: %s\n", inputs[m], err.Error())
+	// 		os.Exit(1)
+	// 	}
+	// 	fmt.Printf("Now watching %v on a falling edge.\n", inputs[m])
+	// }
 
 	// Looping Output Sequence
 	for j := 1; j <= 100; j++ {
